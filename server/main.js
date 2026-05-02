@@ -184,4 +184,5 @@ setInterval(() => {
 const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, '0.0.0.0', () => {
   console.log('Bagani Legends Server is LIVE!');
-  console.log('Server listening 
+  console.log(`Server listening on port ${PORT}`);
+});
