@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "958774868734",
+    "project_id": "baganilegends",
+    "storage_bucket": "baganilegends.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958774868734:android:adbe99bbb0946466e903af",
+        "android_client_info": {
+          "package_name": "com.example.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958774868734-ptgfhvjf9gh2chgerqm3ahaqkpr4bnla.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mobile",
+            "certificate_hash": "0b1ef46f4cb4d3b87e5d30a82b4ade2aaf976ea8"
+          }
+        },
+        {
+          "client_id": "958774868734-j0lclhv06mt3b1e0h9s1s9vplmo24eip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_ZNk2q-H6y0nWxfIxACMp5wwyb0y9KAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958774868734-j0lclhv06mt3b1e0h9s1s9vplmo24eip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

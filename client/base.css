@@ -1,0 +1,677 @@
+* {
+  box-sizing: border-box;
+}
+
+.radial-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  z-index: 100;
+}
+
+.radial-item {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid #4a4a4a;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #2a2a2a;
+  box-shadow: inset 0 0 15px #000, 0 5px 15px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  /* Stone texture placeholder */
+  background-image: url('./resources/textures/ui/stone_texture.jpg'); 
+}
+
+.radial-item:hover {
+  border-color: #ffd700;
+}
+
+/* Positioning items in a circle */
+.guard-item { top: 10%; left: 50%; transform: translateX(-50%); }
+.guard-item:hover { transform: translateX(-50%) scale(1.1); }
+
+.paladin-item { top: 30%; left: 85%; transform: translate(-50%, -50%); }
+.paladin-item:hover { transform: translate(-50%, -50%) scale(1.1); }
+
+.warrok-item { top: 80%; left: 70%; transform: translate(-50%, -50%); }
+.warrok-item:hover { transform: translate(-50%, -50%) scale(1.1); }
+
+.zombie-item { top: 80%; left: 30%; transform: translate(-50%, -50%); }
+.zombie-item:hover { transform: translate(-50%, -50%) scale(1.1); }
+
+.sorceror-item { top: 30%; left: 15%; transform: translate(-50%, -50%); }
+.sorceror-item:hover { transform: translate(-50%, -50%) scale(1.1); }
+
+/* Class Icons */
+#class-select-guard { background-image: url('./resources/icons/ui/characteravatars/guardprofile.png'); }
+#class-select-paladin { background-image: url('./resources/icons/ui/characteravatars/paladinprofile.png'); }
+#class-select-warrok { background-image: url('./resources/icons/ui/characteravatars/warrokprofile.png'); }
+#class-select-zombie { background-image: url('./resources/icons/ui/characteravatars/zombieprofile.png'); }
+#class-select-sorceror { background-image: url('./resources/icons/ui/characteravatars/sorcererprofile.png'); }
+
+/* Move the Swap Button to the absolute lower center */
+#icon-bar-character-swap {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 90px;
+  height: 90px;
+  border: 4px solid #ffd700; /* Gold border to make it special */
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  z-index: 100;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+#icon-bar-character-swap:hover {
+  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.profile-avatar {
+  position: absolute;
+  top: 59px;
+  left: 72px;
+  width: 108px;
+  height: 108px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  overflow: hidden;
+  z-index: 3;
+  pointer-events: auto; /* Keep auto so the click-to-toggle works */
+  cursor: pointer;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background: #000000;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.ui {
+  width: 100%;
+  height: 100%;            
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  font-family: 'IM Fell French Canon', serif;
+}
+
+#game-ui {
+  visibility: hidden;
+}
+
+#login-ui {
+  visibility: hidden;
+}
+
+.login-screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;            
+  top: 0;
+  left: 0;
+  font-family: 'IM Fell French Canon', serif;
+  background-image: url('./resources/backgroundbagani.jpg');
+  background-size: cover;
+}
+
+.ui-close-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 25px;
+  height: 25px;
+  background: #aa0000;
+  color: white;
+  text-align: center;
+  line-height: 22px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  border: 2px solid #4a4a4a;
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.ui-close-button:hover {
+  background: #ff0000;
+}
+
+.ui.fadeOut {
+  opacity: 1.0;
+  animation: fadeOut 1s ease-in-out forwards;
+}
+
+
+
+@keyframes fadeOut {
+  from {
+    opacity: 1.0;
+    visibility: visible;
+  }
+  to {
+    opacity: 0.0;
+    visibility: hidden;
+  }
+}
+
+.login-screen-layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-screen-layout.window {
+  height: 260px;
+  width: 340px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  left: 41px;
+  top: 14px;
+}
+
+.login-button {
+  height: 50px;
+  width: 200px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: rgba(130, 130, 130, 0.5);
+  display: inline-block;
+  font-size: 1.2em;
+  text-shadow: 2px 2px 5px black;
+  color: white;
+  margin: 10px;
+  transition: all 0.2s;
+}
+
+.login-button:hover {
+  color: #000000;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.login-input {
+  background: rgba(0, 0, 0, 0);
+  width: 240px;
+  font-size: 1.2em;
+  text-shadow: 2px 2px 5px black;
+  color: white;
+  margin: 10px;
+  border-bottom: 1px solid white;
+  user-select: text;
+}
+
+.login-text {
+  font-size: 1.5em;
+  text-shadow: 2px 2px 5px black;
+  color: white;
+}
+
+
+.chat-ui {
+  position: absolute;
+  left: 10px;
+  bottom: 10px; 
+  background: rgba(1.0, 1.0, 1.0, 0.0);
+  width: 400px;
+  height: 200px;
+  padding: 10px 10px;
+  border-radius: 10px;
+}
+
+.chat-ui-text-area {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  user-select: text;
+}
+
+.chat-text {
+  font-size: .75em;
+  text-shadow: 2px 2px 5px black;
+  color: white;
+}
+
+.chat-text-server {
+  color: rgb(116, 235, 87);
+}
+
+.chat-text-action {
+  color: rgb(247, 20, 20);
+}
+
+.chat-input {
+  background: rgba(0, 0, 0, 0);
+  width: 280px;
+  margin-top: 5px;
+}
+
+
+.quest-ui-layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.quest-ui {
+  background: rgba(1.0, 1.0, 1.0, 0.75);
+  padding: 20px 20px;
+  width: 700px;
+}
+
+.quest-title {
+  font-size: 3em;
+  color: white;
+  text-shadow: 4px 4px black;
+}
+
+.quest-text-title {
+  font-size: 3em;
+  color: white;
+  padding-bottom: 10px;
+}
+
+.quest-text {
+  font-size: 1em;
+  color: white;
+}
+
+.quest-journal {
+  position: absolute;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.9);
+  margin: 30px;
+  padding: 20px 20px;
+  padding-top: 5px;
+  width: 300px;
+  height: 600px;
+  z-index: 6000; /* Ensures it's on the top layer */
+  border: 1px solid #ff0000;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+  overflow-y: auto;
+  left: 1175px;
+  top: 2px;
+}
+
+.quest-journal-title-eerie {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #ff0000;
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #880000;
+  font-weight: bold;
+  text-wrap: balance;
+  letter-spacing: normal; /* Ensures space between words, not letters */
+  text-transform: uppercase;
+}
+
+.quest-journal-city-eerie {
+  text-align: center;
+  font-size: 1.2em;
+  color: #ff0000;
+  text-shadow: 0 0 5px #ff0000;
+  margin-bottom: 10px;
+  letter-spacing: 0.5em;
+  font-weight: bold;
+}
+
+.quest-journal-text-eerie {
+  font-size: 1.0em;
+  color: #ff4d4d;
+  text-shadow: 0 0 5px #ff0000;
+  line-height: 1.6;
+  text-align: center; /* Center alignment for the body text */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.quest-entry {
+  font-size: 2em;
+  color: white;
+  border: black;
+  border-style: solid;
+  border-width: thick;
+  padding: 5px;
+}
+
+.icon-bar {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  pointer-events: none; /* Allow clicks to pass through to the game world */
+}
+
+.icon-bar-item {
+  pointer-events: auto; /* Re-enable clicks for the icons */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 130px;
+  height: 130px;
+  margin: 2px;
+}
+
+#icon-bar-stats { background-image: url('./resources/icons/ui/skills.png'); }
+#icon-bar-inventory { background-image: url('./resources/icons/ui/backpack.png'); }
+#icon-bar-quests { background-image: url('./resources/icons/ui/tied-scroll.png'); }
+
+.health-ui {
+  position: absolute;
+  top: 4px;
+  left: 33px;
+  transform: none;
+  background-image: url('./resources/icons/ui/health-bar.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 500px;
+  height: 300px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.health-bar {
+  background: greenyellow;
+  width: 190px;
+  height: 20px;
+  position: absolute;
+  top: 70px;
+  left: 181px;
+  border: 1px solid black;
+  border-radius: 2px;
+  z-index: 1;
+  pointer-events: none;
+  cursor: default;
+}
+
+.player-name-text {
+  position: absolute;
+  top: 39px;
+  left: 187px;
+  color: white;
+  font-size: 1.2em;
+  text-shadow: 2px 2px 2px black;
+  z-index: 3;
+  pointer-events: none;
+  cursor: default;
+  white-space: nowrap;
+}
+
+/* Mobile Joystick */
+.joystick-container {
+  position: absolute;
+  top: 549px; /* Final Fitment */
+  left: 198px; /* Final Fitment */
+  bottom: auto;
+  right: auto;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  z-index: 10;
+  pointer-events: auto;
+  cursor: default;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.joystick-handle {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Mobile Action Buttons */
+.mobile-action-container {
+  position: absolute;
+  bottom: 120px;
+  right: 120px;
+  z-index: 10;
+  pointer-events: none; /* Allow passthrough for container */
+}
+
+.mobile-action-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  pointer-events: auto; /* Buttons still need to be clickable */
+  cursor: pointer;
+  position: absolute;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  text-shadow: 1px 1px 2px black;
+  z-index: 10;
+}
+
+.attack-btn { 
+  background: rgba(200, 0, 0, 0.6); 
+  top: 438px;
+  left: 1346px;
+  width: 100px; 
+  height: 100px; 
+}
+
+.dance-btn { 
+  background: rgba(0, 100, 200, 0.6); 
+  top: 552px;
+  left: 1227px;
+  width: 80px; 
+  height: 80px;
+}
+
+#exit-button {
+  top: 30%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+}
+
+.mana-bar {
+  background: #0077ff;
+  width: 180px;
+  height: 16px;
+  position: absolute;
+  top: 97px;
+  left: 187px;
+  border: 1px solid black;
+  border-radius: 2px;
+  z-index: 1;
+  pointer-events: none;
+  cursor: default;
+}
+
+.energy-bar {
+  background: #ffcc00;
+  width: 140px;
+  height: 14px;
+  position: absolute;
+  top: 124px;
+  left: 203px;
+  border: 1px solid black;
+  border-radius: 2px;
+  z-index: 1;
+  pointer-events: none;
+  cursor: default;
+}
+
+.stats-tooltip {
+  position: relative;
+  display: inline-block;
+  z-index: 100;
+}
+
+.stats-tooltip .stats-tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: black;
+  opacity: 0.75;
+  text-align: center;
+  padding: 1em;
+  border-radius: 6px;
+  color: white;
+  font-size: medium;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+}
+
+.stats-tooltip:hover .stats-tooltiptext {
+  visibility: visible;
+}
+
+.stats-title {
+  font-size: 3em;
+  color: white;
+  text-shadow: 4px 4px black;
+}
+
+.stats {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 30px;
+  z-index: 1;
+}
+
+.stats-inner {
+  display: flex;
+  flex-direction: column;
+  background: rgba(1.0, 1.0, 1.0, 0.75);
+  padding: 20px 20px;
+  width: 250px;
+  padding-top: 5px;
+}
+
+.stats-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 2em;
+  color: white;
+  text-shadow: 4px 4px black;
+}
+
+.inventory-title {
+  font-size: 3em;
+  color: white;
+  text-shadow: 4px 4px black;
+}
+
+.inventory {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 30px;
+  z-index: 6000; /* Ensures it's on the top layer */
+}
+
+.inventory-inner {
+  display: flex;
+  flex-direction: column;
+  background: rgba(1.0, 1.0, 1.0, 0.75);
+  padding: 20px 20px;
+  padding-top: 5px;
+}
+
+.inventory-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.inventory-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.inventory-character {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 355px;
+  height: 350px;
+  pointer-events: none;
+  cursor: default;
+  position: relative;
+  left: 1px;
+  top: -15px;
+}
+
+.inventory-item {
+  border: black;
+  border-style: solid;
+  border-radius: 10%;
+  background-color: black;
+  width: 50px;
+  height: 50px;
+  margin: 2px;
+  background-size: cover;
+}

@@ -1,0 +1,9 @@
+node_modules/
+.firebase/
+build/
+*.hprof
+*.log
+.dart_tool/
+.idea/
+.vscode/
+client/public/

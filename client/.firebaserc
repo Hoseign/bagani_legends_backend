@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "baganilegends"
+  },
+  "targets": {
+    "baganilegends": {
+      "hosting": {
+        "app": [
+          "baganilegends"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
